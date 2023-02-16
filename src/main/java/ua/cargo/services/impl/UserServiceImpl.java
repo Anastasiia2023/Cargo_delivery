@@ -1,14 +1,12 @@
 package ua.cargo.services.impl;
 
 import ua.cargo.dao.UserDAO;
-import ua.cargo.dto.OrderDTO;
 import ua.cargo.dto.UserDTO;
-import ua.cargo.entities.Order;
 import ua.cargo.entities.Pagination;
 import ua.cargo.entities.enums.Role;
 import ua.cargo.entities.User;
 import ua.cargo.exceptions.DAOException;
-import ua.cargo.exceptions.NoSuchEventException;
+import ua.cargo.exceptions.NoSuchElementException;
 import ua.cargo.exceptions.NoSuchUserException;
 import ua.cargo.exceptions.ServiceException;
 import ua.cargo.services.UserService;
@@ -32,7 +30,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO getById(long id) throws ServiceException {
         UserDTO userDTO;
         try {
-            User user = userDAO.getById(id).orElseThrow(NoSuchEventException::new);
+            User user = userDAO.getById(id).orElseThrow(NoSuchElementException::new);
             userDTO = convertUserToDTO(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
