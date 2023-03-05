@@ -1,10 +1,8 @@
 package ua.cargo.services;
 
-import ua.cargo.dao.CityDAO;
+
 import ua.cargo.dao.OrderDAO;
-import ua.cargo.dto.CityDTO;
 import ua.cargo.dto.OrderDTO;
-import ua.cargo.dto.RouteDTO;
 import ua.cargo.entities.*;
 import ua.cargo.entities.enums.OrderStatus;
 import ua.cargo.exceptions.DAOException;
@@ -13,25 +11,18 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import ua.cargo.services.impl.CalculateServiceImpl;
-import ua.cargo.services.impl.CityServiceImpl;
 import ua.cargo.services.impl.OrderServiceImpl;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Matchers.*;
 
+
 import static ua.cargo.entities.enums.OrderStatus.PLACED;
-import static ua.cargo.entities.enums.PaymentStatus.WAITING_FOR_PAYMENT;
 import static ua.cargo.entities.enums.PaymentStatus.WAITING_INVOICE;
-import static ua.cargo.entities.enums.PaymentType.BANK_TRANSFER;
 import static ua.cargo.entities.enums.PaymentType.CREDIT_CARD;
-import static ua.cargo.utils.ConvertorUtil.*;
-import static ua.cargo.utils.PaginationUtil.isOrdered;
 
 public class OrderServiceTest {
 
@@ -416,5 +407,20 @@ public class OrderServiceTest {
         Assert.assertNotNull(orderDTO.getCreationDate());
         Assert.assertNotNull(orderDTO.getStatus());
     }
+    @Test
+    public void completePaymentTest() throws ServiceException, DAOException {
+        long id = 1L;
+        Mockito.doNothing().when(orderDAO).updatePayment(anyLong(), anyBoolean(), any());
+
+        orderService.completePayment(id);
+    }
+    @Test
+    public void confirmPaymentTest() throws ServiceException, DAOException {
+        long id = 1L;
+        Mockito.doNothing().when(orderDAO).updatePayment(anyLong(), anyBoolean(), any());
+
+        orderService.confirmPayment(id);
+    }
+
 
 }

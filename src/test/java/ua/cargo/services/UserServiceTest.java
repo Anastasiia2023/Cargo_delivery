@@ -2,6 +2,7 @@ package ua.cargo.services;
 
 
 import ua.cargo.dao.UserDAO;
+import ua.cargo.dto.CityDTO;
 import ua.cargo.dto.UserDTO;
 import ua.cargo.entities.enums.Role;
 import ua.cargo.exceptions.DAOException;
@@ -15,9 +16,12 @@ import org.mockito.Mockito;
 
 import ua.cargo.entities.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Matchers.*;
+import static ua.cargo.entities.enums.Role.CUSTOMER;
+import static ua.cargo.entities.enums.Role.MANAGER;
 import static ua.cargo.utils.PasswordHashUtil.encode;
 
 public class UserServiceTest {
@@ -35,7 +39,7 @@ public class UserServiceTest {
     public void getByIdTest() throws DAOException, ServiceException {
         long id = 1L;
         User user = new User(id, "Mim", "Lil", "qawsed%H","edrftOgkd@ukk.net", "+380967477", "23/02/1998");
-        user.setRole(Role.CUSTOMER);
+        user.setRole(CUSTOMER);
         Optional<User> userOptional=Optional.of(user);
 
         Mockito.when(userDAO.getById(anyLong())).thenReturn(userOptional);
@@ -136,10 +140,115 @@ public class UserServiceTest {
         Mockito.when(userDAO.getById(anyLong())).thenReturn(userOptional);
         Mockito.doThrow(new DAOException(null)).when(userDAO).updatePassword(any());
 
-        userService.changePassword(user.getId(), user.getPassword(), newPass, confirmPass );
+        userService.changePassword(user.getId(), password, newPass, confirmPass );
 
 
     }
+
+    @Test
+    public void getAllTest() throws DAOException, ServiceException {
+        long id = 1L;
+        Pagination pagination = new Pagination();
+        pagination.setOffset(10);
+        pagination.setRecords(35);
+        String query = "";
+        User user = new User(id, "Anna", "Benn", "1q2w3e4qT", "qawsedrfvnd@ukr.net", "+38096547934", CUSTOMER );
+        List<User> userList = List.of(user);
+
+        Mockito.when(userDAO.getAll(pagination.getOffset(), pagination.getRecords(), query)).thenReturn(userList);
+
+        List<UserDTO> result = userService.getAll(pagination, query);
+
+        Assert.assertEquals(user.getId(), result.get(0).getId());
+        Assert.assertEquals(user.getName(), result.get(0).getName());
+        Assert.assertEquals(user.getSurname(), result.get(0).getSurname());
+        Assert.assertEquals(user.getPassword(), result.get(0).getPassword());
+        Assert.assertEquals(user.getEmail(), result.get(0).getEmail());
+        Assert.assertEquals(user.getPhone(), result.get(0).getPhone());
+
+    }
+
+    @Test
+    public void getAllIsOrderedTest() throws DAOException, ServiceException {
+        long id = 1L;
+        Pagination pagination = new Pagination();
+        pagination.setOffset(10);
+        pagination.setRecords(35);
+        pagination.setSortField("");
+        pagination.setOrder("");
+        String query = "";
+        User user = new User(id, "Anna", "Benn", "1q2w3e4qT", "qawsedrfvnd@ukr.net", "+38096547934", CUSTOMER );
+        List<User> userList = List.of(user);
+
+        Mockito.when(userDAO.getAll(pagination.getOffset(), pagination.getRecords(), pagination.getSortField(), pagination.getOrder(), query)).thenReturn(userList);
+
+        List<UserDTO> result = userService.getAll(pagination, query);
+
+        Assert.assertEquals(user.getId(), result.get(0).getId());
+        Assert.assertEquals(user.getName(), result.get(0).getName());
+        Assert.assertEquals(user.getSurname(), result.get(0).getSurname());
+        Assert.assertEquals(user.getPassword(), result.get(0).getPassword());
+        Assert.assertEquals(user.getEmail(), result.get(0).getEmail());
+        Assert.assertEquals(user.getPhone(), result.get(0).getPhone());
+
+    }
+
+    @Test(expected = ServiceException.class)
+    public void  getAllExceptionTest() throws DAOException, ServiceException {
+        long id = 1L;
+        Pagination pagination = new Pagination();
+        pagination.setOffset(10);
+        pagination.setRecords(35);
+        String query = "";
+
+        Mockito.when(userDAO.getAll(pagination.getOffset(), pagination.getRecords(), query)).thenThrow(new DAOException(null));
+
+        userService.getAll(pagination, query);
+
+    }
+
+    @Test
+    public void getNumberOfRecordsTest() throws DAOException, ServiceException {
+        int records = 45;
+        String query = "";
+
+        Mockito.when(userDAO.getNumberOfRecords(query)).thenReturn(records);
+
+        int result = userService.getNumberOfRecords("");
+
+        Assert.assertEquals(records, result);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void  getNumberOfRecordsExceptionTest() throws DAOException, ServiceException {
+        String query = "";
+
+        Mockito.when(userDAO.getNumberOfRecords(query)).thenThrow(new DAOException(null));
+
+        userService.getNumberOfRecords("");
+
+
+    }
+
+    @Test(expected = ServiceException.class)
+    public void updateRoleCustomerWithExceptionTest() throws ServiceException, DAOException {
+        long id = 1L;
+        Role role = CUSTOMER;
+
+        Mockito.doThrow(new DAOException(null)).when(userDAO).updateRole(id, MANAGER);
+
+        userService.updateRole(id, role);
+    }
+    @Test(expected = ServiceException.class)
+    public void updateRoleManagerWithExceptionTest() throws ServiceException, DAOException {
+        long id = 1L;
+        Role roles = MANAGER;
+
+        Mockito.doThrow(new DAOException(null)).when(userDAO).updateRole(id, CUSTOMER);
+
+        userService.updateRole(id, roles);
+    }
+
 
 
 
