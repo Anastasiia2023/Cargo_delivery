@@ -149,7 +149,7 @@ public class InvoiceServiceTest {
         String path = "";
         Invoice invoice = new Invoice(id, LocalDate.now(), path, user, order);
         InvoiceDTO invoiceDTO = new InvoiceDTO(id,LocalDate.now(), path, id, id );
-        UserDTO userDTO = new UserDTO(id, "Name", "Surname", "email.com", "+38054326", "23/02/1997");
+        UserDTO userDTO = new UserDTO(id, "Name", "Surname", "email.com", "+38054326", LocalDate.parse("1997-02-23"));
         OrderDTO orderDTO = new OrderDTO(30, 50, id, 500, "Documents", id);
         orderDTO.setStatus(OrderStatus.PROCESSED.getValue());
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

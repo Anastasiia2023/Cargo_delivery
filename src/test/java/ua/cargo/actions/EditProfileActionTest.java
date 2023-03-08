@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.time.LocalDate;
+
 import static org.mockito.Mockito.*;
 
 
@@ -50,7 +52,7 @@ public class EditProfileActionTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        UserDTO userDTO = new UserDTO(id, "Nino", "Archi", "wkmffeifiw@ulr.net", "+3807549575", "23/02/1997");
+        UserDTO userDTO = new UserDTO(id, "Nino", "Archi", "wkmffeifiw@ulr.net", "+3807549575", LocalDate.parse("1997-02-23"));
 
         when(request.getMethod()).thenReturn("POST");
         when(request.getSession()).thenReturn(session);
@@ -59,7 +61,7 @@ public class EditProfileActionTest {
         when(request.getParameter(Parameters.SURNAME)).thenReturn(userDTO.getSurname());
         when(request.getParameter(Parameters.EMAIL)).thenReturn(userDTO.getEmail());
         when(request.getParameter(Parameters.PHONE)).thenReturn(userDTO.getPhone());
-        when(request.getParameter(Parameters.DATE_OF_BIRTH)).thenReturn(userDTO.getDate_birth());
+        when(request.getParameter(Parameters.DATE_OF_BIRTH)).thenReturn(userDTO.getDateBirth().toString());
         doNothing().when(userService).update(userDTO);
 
         String result = editProfileAction.execute(request, response);

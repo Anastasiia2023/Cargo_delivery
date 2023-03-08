@@ -22,8 +22,6 @@ import java.util.Optional;
 
 import static ua.cargo.dao.constants.OrderSQLQueries.*;
 import static ua.cargo.dao.constants.OrderSQLQueries.GET_NUMBER_OF_RECORDS;
-import static ua.cargo.dao.constants.RouteSQLQueries.GET_ROUTE_BY_ID;
-import static ua.cargo.dao.constants.RouteSQLQueries.UPDATE_ROUTE;
 
 
 public class OrderDAOImpl implements OrderDAO {

@@ -14,6 +14,8 @@ import ua.cargo.services.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.time.LocalDate;
+
 import static ua.cargo.utils.ActionUtil.*;
 
 public class EditProfileAction implements Action {
@@ -52,7 +54,8 @@ public class EditProfileAction implements Action {
 
     private UserDTO getUserDTO(HttpServletRequest request, UserDTO currentUser) {
         return new UserDTO(currentUser.getId(), request.getParameter(Parameters.NAME), request.getParameter(Parameters.SURNAME),
-                request.getParameter(Parameters.EMAIL), request.getParameter(Parameters.PHONE), request.getParameter(Parameters.DATE_OF_BIRTH));
+                request.getParameter(Parameters.EMAIL), request.getParameter(Parameters.PHONE), LocalDate.parse(request.getParameter(Parameters.DATE_OF_BIRTH)),
+                request.getParameter(Parameters.ADDRESS));
     }
 
     private void updateSessionUser(UserDTO currentUser, UserDTO user) {

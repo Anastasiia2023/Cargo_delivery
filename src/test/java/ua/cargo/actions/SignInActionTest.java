@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.time.LocalDate;
+
 import static org.mockito.Mockito.*;
 import static ua.cargo.entities.enums.Role.CUSTOMER;
 
@@ -52,7 +54,7 @@ public class SignInActionTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
 
-        UserDTO userDTO = new UserDTO(id, "Nino", "Archi", password, "wkmffeifiw@ulr.net", "+340597743", "23/04/1996", CUSTOMER);
+        UserDTO userDTO = new UserDTO(id, "Nino", "Archi", password, "wkmffeifiw@ulr.net", "+340597743", LocalDate.parse("1996-04-23"), CUSTOMER);
 
         when(request.getMethod()).thenReturn("POST");
         when(request.getSession()).thenReturn(session);

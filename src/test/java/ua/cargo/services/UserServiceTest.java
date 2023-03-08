@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 
 import ua.cargo.entities.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,7 @@ public class UserServiceTest {
     @Test
     public void getByIdTest() throws DAOException, ServiceException {
         long id = 1L;
-        User user = new User(id, "Mim", "Lil", "qawsed%H","edrftOgkd@ukk.net", "+380967477", "23/02/1998");
+        User user = new User(id, "Mim", "Lil", "qawsed%H","edrftOgkd@ukk.net", "+380967477", LocalDate.parse("1988-02-23"));
         user.setRole(CUSTOMER);
         Optional<User> userOptional=Optional.of(user);
 
@@ -52,7 +53,7 @@ public class UserServiceTest {
         Assert.assertEquals(user.getEmail(), result.getEmail());
         Assert.assertEquals(user.getPhone(), result.getPhone());
         Assert.assertEquals(user.getSurname(), result.getSurname());
-        Assert.assertEquals(user.getDate_birth(), result.getDate_birth());
+        Assert.assertEquals(user.getDateBirth(), result.getDateBirth());
 
     }
     @Test(expected = ServiceException.class)
@@ -68,7 +69,7 @@ public class UserServiceTest {
     @Test(expected = ServiceException.class)
     public void updateWithExceptionTest() throws ServiceException, DAOException {
 
-        UserDTO userDTO = new UserDTO("Mim", "Lil", "qawsed%H","edrftOgkd@ukk.net", "+380967477", "23/02/1998");
+        UserDTO userDTO = new UserDTO("Mim", "Lil", "qawsed%H","edrftOgkd@ukk.net", "+380967477", LocalDate.parse("1998-02-23"));
 
         Mockito.doThrow(new DAOException(null)).when(userDAO).update(anyObject());
 
@@ -87,7 +88,7 @@ public class UserServiceTest {
     @Test(expected = ServiceException.class)
     public void addWithExceptionTest() throws ServiceException, DAOException {
         long id = 1L;
-        UserDTO userDTO = new UserDTO( "Mim", "Lil", "qawsed%H","edrftOgkd@ukk.net", "+380967477", "23/02/1998");
+        UserDTO userDTO = new UserDTO( "Mim", "Lil", "qawsed%H","edrftOgkd@ukk.net", "+380967477", LocalDate.parse("1998-02-23"));
 
         Mockito.doThrow(new DAOException(null)).when(userDAO).add(anyObject());
 
@@ -100,7 +101,7 @@ public class UserServiceTest {
         String password = "qawsed%H";
         String login = "edrftOgkd@ukk.net";
 
-        User user = new User(id, "Mim", "Lil", encode(password),login, "+380967477", "23/02/1998");
+        User user = new User(id, "Mim", "Lil", encode(password),login, "+380967477", LocalDate.parse("1998-02-23"));
         user.setRole(Role.MANAGER);
         Optional<User> userOptional=Optional.of(user);
 
@@ -133,7 +134,7 @@ public class UserServiceTest {
 
         String login = "edrftOgkd@ukk.net";
 
-        User user = new User(id, "Mim", "Lil", encode(password),login, "+380967477", "23/02/1998");
+        User user = new User(id, "Mim", "Lil", encode(password),login, "+380967477", LocalDate.parse("1998-02-23"));
         user.setRole(Role.MANAGER);
         Optional<User> userOptional=Optional.of(user);
 

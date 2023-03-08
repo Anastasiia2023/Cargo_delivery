@@ -3,6 +3,7 @@ package ua.cargo.dto;
 import ua.cargo.entities.enums.Role;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -12,35 +13,47 @@ public class UserDTO implements Serializable {
     private String password;
     private String email;
     private String phone;
-    private String date_birth;
-
+    private LocalDate dateBirth;
+    private String address;
     private int role;
 
-    public UserDTO(String name, String surname, String password, String email, String phone, String date_birth) {
+    public UserDTO(String name, String surname, String password, String email, String phone, LocalDate dateBirth) {
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.date_birth = date_birth;
+        this.dateBirth = dateBirth;
     }
 
-    public UserDTO(long id, String name, String surname, String email, String phone, String date_birth) {
+    public UserDTO(long id, String name, String surname, String email, String phone, LocalDate dateBirth) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phone = phone;
-        this.date_birth = date_birth;
+        this.dateBirth = dateBirth;
     }
-    public UserDTO(long id, String name, String surname, String password, String email, String phone, String date_birth, Role role) {
+
+    public UserDTO(long id, String name, String surname, String email, String phone, LocalDate dateBirth, String address) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phone = phone;
+        this.dateBirth = dateBirth;
+        this.address = address;
+    }
+
+    public UserDTO(long id, String name, String surname, String password, String email, String phone, LocalDate dateBirth, String address, Role role) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.date_birth = date_birth;
+        this.dateBirth = dateBirth;
+        this.address = address;
         this.role = role.getValue();
     }
 
@@ -100,12 +113,20 @@ public class UserDTO implements Serializable {
         this.phone = phone;
     }
 
-    public String getDate_birth() {
-        return date_birth;
+    public LocalDate getDateBirth() {
+        return dateBirth;
     }
 
-    public void setDate_birth(String date_birth) {
-        this.date_birth = date_birth;
+    public void setDateBirth(String LocalDate) {
+        this.dateBirth = dateBirth;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getRole() {

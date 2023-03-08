@@ -13,6 +13,8 @@ import ua.cargo.services.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.time.LocalDate;
+
 import static ua.cargo.utils.ActionUtil.*;
 import static ua.cargo.actions.constants.ActionNames.SIGN_UP_ACTION;
 import static ua.cargo.actions.constants.Pages.SIGN_IN_PAGE;
@@ -55,6 +57,6 @@ public class SignUpAction implements Action {
 
     private UserDTO getUserDTO(HttpServletRequest request) {
         return new UserDTO(request.getParameter(Parameters.NAME), request.getParameter(Parameters.SURNAME), request.getParameter(Parameters.PASSWORD),
-                request.getParameter(Parameters.EMAIL), request.getParameter(Parameters.PHONE), request.getParameter(Parameters.DATE_OF_BIRTH));
+                request.getParameter(Parameters.EMAIL), request.getParameter(Parameters.PHONE), LocalDate.parse(request.getParameter(Parameters.DATE_OF_BIRTH)));
     }
 }

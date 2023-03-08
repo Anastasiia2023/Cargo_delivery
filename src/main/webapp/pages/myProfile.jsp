@@ -95,13 +95,14 @@ POPUP
 			     <!--Date of birth -->
 			     <div class="col-md-6">
 			       <label fo class="form-label"><fmt:message key="birthday"/></label>
-			       <input type="date" class="form-control" placeholder="" aria-label="Date of birth" value="dd/mm/year ">
+			       <input type="date" class="form-control" placeholder="" aria-label="Date of birth" value="${sessionScope.loggedUser.dateBirth}"
+			       id="date-of-birth" name="date-of-birth">
 			     </div>
 
 			     <!-- Address -->
 			     <div class="col-md-6">
 			       <label class="form-label"><fmt:message key="address"/></label>
-			       <input type="text" class="form-control" placeholder="" aria-label="Address" value="">
+			       <input type="text" class="form-control" placeholder="" aria-label="Address" value="${sessionScope.loggedUser.address}" id="address" name="address">
 			     </div>
 				 <!-- Row END -->
 

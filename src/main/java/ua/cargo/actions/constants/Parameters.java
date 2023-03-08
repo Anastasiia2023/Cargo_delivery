@@ -11,6 +11,7 @@ public final class Parameters {
     public static final String PASSWORD = "password";
     public static final String PHONE = "phone";
     public static final String DATE_OF_BIRTH = "date-of-birth";
+    public static final String ADDRESS = "address";
     public static final String DATE_FROM = "date-from";
     public static final String DATE_TO = "date-to";
     public static final String ORDER_STATUS = "order-status";

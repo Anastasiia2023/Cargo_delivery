@@ -27,11 +27,11 @@ public final class ConvertorUtil {
     }
 
     public static UserDTO convertUserToDTO(User user) {
-        return new UserDTO(user.getId(), user.getName(), user.getSurname(), user.getPassword(), user.getEmail(), user.getPhone(), user.getDate_birth(), user.getRole());
+        return new UserDTO(user.getId(), user.getName(), user.getSurname(), user.getPassword(), user.getEmail(), user.getPhone(), user.getDateBirth(), user.getAddress(), user.getRole());
     }
 
     public static User convertDTOToUser(UserDTO userDTO) {
-        return new User(userDTO.getId(), userDTO.getName(), userDTO.getSurname(), userDTO.getPassword(), userDTO.getEmail(), userDTO.getPhone(), userDTO.getDate_birth());
+        return new User(userDTO.getId(), userDTO.getName(), userDTO.getSurname(), userDTO.getPassword(), userDTO.getEmail(), userDTO.getPhone(), userDTO.getDateBirth(), userDTO.getAddress());
     }
 
     public static Order convertDTOToOrder(OrderDTO orderDTO) {

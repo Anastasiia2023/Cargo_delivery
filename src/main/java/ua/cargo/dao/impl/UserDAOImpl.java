@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -236,7 +237,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     private User createUser(ResultSet resultSet) throws SQLException {
-        User user = new User(resultSet.getInt(SQLFields.ID), resultSet.getString(SQLFields.NAME), resultSet.getString(SQLFields.SURNAME), resultSet.getString(SQLFields.PASSWORD), resultSet.getString(SQLFields.EMAIL), resultSet.getString(SQLFields.PHONE), getRole(resultSet.getInt(SQLFields.ROLE)));
+        User user = new User(resultSet.getInt(SQLFields.ID), resultSet.getString(SQLFields.NAME), resultSet.getString(SQLFields.SURNAME), resultSet.getString(SQLFields.PASSWORD), resultSet.getString(SQLFields.EMAIL), resultSet.getString(SQLFields.PHONE), LocalDate.parse(resultSet.getString(SQLFields.DATE_BIRTH)), resultSet.getString(SQLFields.ADDRESS), getRole(resultSet.getInt(SQLFields.ROLE)));
         user.setId(resultSet.getInt(SQLFields.ID));
         return user;
     }
@@ -248,6 +249,7 @@ public class UserDAOImpl implements UserDAO {
         preparedStatement.setString(++k, user.getName());
         preparedStatement.setString(++k, user.getSurname());
         preparedStatement.setString(++k, user.getPhone());
+        preparedStatement.setObject(++k, user.getDateBirth());
         preparedStatement.setInt(++k, user.getRole().getValue());
     }
 
@@ -258,6 +260,8 @@ public class UserDAOImpl implements UserDAO {
         preparedStatement.setString(++k, user.getName());
         preparedStatement.setString(++k, user.getSurname());
         preparedStatement.setString(++k, user.getPhone());
+        preparedStatement.setObject(++k, user.getDateBirth());
+        preparedStatement.setString(++k, user.getAddress());
         preparedStatement.setLong(++k, user.getId());
     }
 }

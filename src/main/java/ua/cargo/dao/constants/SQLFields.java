@@ -2,6 +2,8 @@ package ua.cargo.dao.constants;
 
 public final class SQLFields {
     public static final String ID = "id";
+    public static final String DATE_BIRTH = "birthday";
+    public static final String ADDRESS = "address";
     public static final String CITY_FROM_ID_SQL = "city_from_id";
     public static final String CITY_TO_ID_SQL = "city_to_id";
 
