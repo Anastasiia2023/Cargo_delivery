@@ -4,7 +4,6 @@ package ua.cargo.dao.impl;
 import ua.cargo.connection.DataSource;
 import ua.cargo.dao.UserDAO;
 import ua.cargo.dao.constants.SQLFields;
-import ua.cargo.entities.Order;
 import ua.cargo.entities.User;
 import ua.cargo.entities.enums.Role;
 import ua.cargo.exceptions.DAOException;
@@ -237,7 +236,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     private User createUser(ResultSet resultSet) throws SQLException {
-        User user = new User(resultSet.getInt(SQLFields.ID), resultSet.getString(SQLFields.NAME), resultSet.getString(SQLFields.SURNAME), resultSet.getString(SQLFields.PASSWORD), resultSet.getString(SQLFields.EMAIL), resultSet.getString(SQLFields.PHONE), LocalDate.parse(resultSet.getString(SQLFields.DATE_BIRTH)), resultSet.getString(SQLFields.ADDRESS), getRole(resultSet.getInt(SQLFields.ROLE)));
+        LocalDate birthday = resultSet.getString(SQLFields.DATE_BIRTH) == null ? null : LocalDate.parse(resultSet.getString(SQLFields.DATE_BIRTH));
+        User user = new User(resultSet.getInt(SQLFields.ID), resultSet.getString(SQLFields.NAME), resultSet.getString(SQLFields.SURNAME), resultSet.getString(SQLFields.PASSWORD), resultSet.getString(SQLFields.EMAIL), resultSet.getString(SQLFields.PHONE), birthday, resultSet.getString(SQLFields.ADDRESS), getRole(resultSet.getInt(SQLFields.ROLE)));
         user.setId(resultSet.getInt(SQLFields.ID));
         return user;
     }

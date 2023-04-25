@@ -1,5 +1,12 @@
 package ua.cargo.actions.constants;
 
+/**
+ * This is Parameters class. It contains required parameters and attributes names
+ *
+ * @author Anastasiia Shevchuk
+ * @version 1.0
+ */
+
 public final class Parameters {
     public static final String ID = "id";
 
@@ -45,6 +52,7 @@ public final class Parameters {
     public static final String REPORTS = "reports";
 
     public static final String ORDER = "order";
+    public static final String SORT = "sort";
     public static final String OFFSET = "offset";
     public static final String CURRENT_PAGE = "currentPage";
     public static final String START = "start";

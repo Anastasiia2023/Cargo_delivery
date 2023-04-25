@@ -1,5 +1,12 @@
 package ua.cargo.actions.constants;
 
+/**
+ * This is Pages class. It contains all web app pages
+ *
+ * @author Anastasiia Shevchuk
+ * @version 1.0
+ */
+
 public final class Pages {
     public static final String CONTROLLER_PAGE = "controller";
     public static final String INDEX_PAGE = "index.jsp";

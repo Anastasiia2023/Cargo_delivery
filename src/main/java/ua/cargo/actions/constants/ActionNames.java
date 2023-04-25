@@ -1,5 +1,12 @@
 package ua.cargo.actions.constants;
 
+/**
+ * This is ActionNames class. It contains all action names
+ *
+ * @author Anastasiia Shevchuk
+ * @version 1.0
+ */
+
 public final class ActionNames {
     public static final String DEFAULT_ACTION = "default";
     public static final String SIGN_IN_ACTION = "sign-in";

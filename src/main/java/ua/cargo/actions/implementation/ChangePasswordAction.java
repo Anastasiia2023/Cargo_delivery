@@ -14,6 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import static ua.cargo.utils.ActionUtil.*;
 import static ua.cargo.actions.constants.Pages.PROFILE_PAGE;
 
+/**
+ * This is ChangePasswordAction class. Accessible by any logged user. Allows to change user's password.
+ *
+ * @author Anastasiia Shevchuk
+ * @version 1.0
+ */
+
 public class ChangePasswordAction implements Action {
     private final UserService userService;
 
@@ -27,11 +34,28 @@ public class ChangePasswordAction implements Action {
         return isPostMethod(request) ? executePost(request) : executeGet(request);
     }
 
+    /**
+     * Called from doGet method in front-controller. Obtains required path and transfer attributes from session
+     * to request
+     *
+     * @param request to get message or error attribute from session and put it in request
+     * @return profile page
+     */
+
     private String executeGet(HttpServletRequest request) {
         transferStringFromSessionToRequest(request, Parameters.MESSAGE);
         transferStringFromSessionToRequest(request, Parameters.ERROR);
         return PROFILE_PAGE;
     }
+
+    /**
+     * Called from doPost method in front-controller. Tries to change users password via service
+     *
+     * @param request to get users id and all passwords. Also, to set message in case of successful deleting and error
+     * in another case
+     *
+     * @return path to redirect to executeGet method through front-controller
+     */
 
     private String executePost(HttpServletRequest request) throws ServiceException {
         try {

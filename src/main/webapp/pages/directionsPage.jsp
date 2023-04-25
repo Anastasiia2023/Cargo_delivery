@@ -15,6 +15,7 @@
 <script src="../js/jquery-3.6.3.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/bootstrap-icons.css">
 </head>
 <body>
 
@@ -138,9 +139,54 @@
              <table class="table table-bordered" style="background-color: #e3f2fd;">
                <thead>
                   <tr >
-                     <th scope="col"><fmt:message key="id"/></th>
-                     <th scope="col"><fmt:message key="city.from"/></th>
-                     <th scope="col"><fmt:message key="city.to"/></th>
+                     <th scope="col"><fmt:message key="id"/>
+                     <c:if test="${requestScope.sort ne 'id'}">
+                                                               <a href="controller?action=directions&sort=id&order=ASC&offset=${offset}&records=${records}&city-from-id=${cityFrom.id}&city-to-id=${cityTo.id}">
+                                                                  <i class="bi bi-arrow-down-up"></i>
+                                                               </a>
+                                                           </c:if>
+                                                           <c:if test="${requestScope.sort eq 'id' && requestScope.order eq 'ASC'}">
+                                                              <a href="controller?action=directions&sort=id&order=DESC&offset=${offset}&records=${records}&city-from-id=${cityFrom.id}&city-to-id=${cityTo.id}">
+                                                                 <i class="bi bi-arrow-up"></i>
+                                                              </a>
+                                                           </c:if>
+                                                           <c:if test="${requestScope.sort eq 'id' && requestScope.order eq 'DESC'}">
+                                                              <a href="controller?action=directions&sort=id&order=ASC&offset=${offset}&records=${records}&city-from-id=${cityFrom.id}&city-to-id=${cityTo.id}">
+                                                                  <i class="bi bi-arrow-down"></i>
+                                                              </a>
+                                                           </c:if></th>
+                     <th scope="col"><fmt:message key="city.from"/>
+                     <c:if test="${requestScope.sort ne 'city_from_id'}">
+                                                               <a href="controller?action=directions&sort=city_from_id&order=ASC&offset=${offset}&records=${records}&city-from-id=${cityFrom.id}&city-to-id=${cityTo.id}">
+                                                                  <i class="bi bi-arrow-down-up"></i>
+                                                               </a>
+                                                           </c:if>
+                                                           <c:if test="${requestScope.sort eq 'city_from_id' && requestScope.order eq 'ASC'}">
+                                                              <a href="controller?action=directions&sort=city_from_id&order=DESC&offset=${offset}&records=${records}&city-from-id=${cityFrom.id}&city-to-id=${cityTo.id}">
+                                                                 <i class="bi bi-arrow-up"></i>
+                                                              </a>
+                                                           </c:if>
+                                                           <c:if test="${requestScope.sort eq 'city_from_id' && requestScope.order eq 'DESC'}">
+                                                              <a href="controller?action=directions&sort=city_from_id&order=ASC&offset=${offset}&records=${records}&city-from-id=${cityFrom.id}&city-to-id=${cityTo.id}">
+                                                                  <i class="bi bi-arrow-down"></i>
+                                                              </a>
+                                                           </c:if></th>
+                     <th scope="col"><fmt:message key="city.to"/>
+                     <c:if test="${requestScope.sort ne 'city_to_id'}">
+                                                               <a href="controller?action=directions&sort=city_to_id&order=ASC&offset=${offset}&records=${records}&city-from-id=${cityFrom.id}&city-to-id=${cityTo.id}">
+                                                                  <i class="bi bi-arrow-down-up"></i>
+                                                               </a>
+                                                           </c:if>
+                                                           <c:if test="${requestScope.sort eq 'city_to_id' && requestScope.order eq 'ASC'}">
+                                                              <a href="controller?action=directions&sort=city_to_id&order=DESC&offset=${offset}&records=${records}&city-from-id=${cityFrom.id}&city-to-id=${cityTo.id}">
+                                                                 <i class="bi bi-arrow-up"></i>
+                                                              </a>
+                                                           </c:if>
+                                                           <c:if test="${requestScope.sort eq 'city_to_id' && requestScope.order eq 'DESC'}">
+                                                              <a href="controller?action=directions&sort=city_to_id&order=ASC&offset=${offset}&records=${records}&city-from-id=${cityFrom.id}&city-to-id=${cityTo.id}">
+                                                                  <i class="bi bi-arrow-down"></i>
+                                                              </a>
+                                                           </c:if></th>
                      <th scope="col"><fmt:message key="distance"/></th>
                      <th scope="col"><fmt:message key="estimate.delivery.terms"/></th>
                   </tr>

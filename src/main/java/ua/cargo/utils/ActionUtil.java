@@ -1,11 +1,14 @@
 package ua.cargo.utils;
 
 
+import ua.cargo.actions.constants.Parameters;
 import ua.cargo.dto.CityDTO;
 import ua.cargo.dto.OrderDTO;
 import ua.cargo.dto.ParcelDTO;
 import ua.cargo.dto.UserDTO;
 import ua.cargo.entities.enums.OrderStatus;
+import ua.cargo.exceptions.ServiceException;
+import ua.cargo.services.CityService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -25,6 +28,7 @@ public final class ActionUtil {
         PARAMETERS.add(OFFSET);
         PARAMETERS.add(RECORDS);
         PARAMETERS.add(ORDER);
+        PARAMETERS.add(SORT);
         PARAMETERS.add(DATE_FROM);
         PARAMETERS.add(DATE_TO);
         PARAMETERS.add(ORDER_STATUS);
@@ -113,20 +117,32 @@ public final class ActionUtil {
     public static void setOrderAttributes(HttpServletRequest request, List<OrderDTO> result) {
         request.setAttribute(LIST_ORDERS_STATUS, OrderStatus.values());
         request.setAttribute(LIST_ORDERS, result);
-        if (request.getParameter(DATE_FROM) != null) {
+        if (isNotNull(request.getParameter(DATE_FROM))) {
             LocalDate dateFrom = LocalDate.parse(request.getParameter(DATE_FROM));
             request.setAttribute("dateFrom", dateFrom);
         }
-        if (request.getParameter(DATE_TO) != null) {
+        if (isNotNull(request.getParameter(DATE_TO))) {
             LocalDate dateTo = LocalDate.parse(request.getParameter(DATE_TO));
             request.setAttribute("dateTo", dateTo);
         }
         String orderStatus = request.getParameter(ORDER_STATUS);
-        request.setAttribute(ORDER_STATUS_ATTRIBUTE, orderStatus == null ? null : OrderStatus.getOrderStatus(orderStatus));
+        request.setAttribute(ORDER_STATUS_ATTRIBUTE,  isNotEmpty(orderStatus) ? OrderStatus.getOrderStatus(orderStatus) : null);
+    }
+
+    public static void setManagerOrderAttributes(HttpServletRequest request, CityService cityService, List<OrderDTO> result) throws ServiceException {
+        setOrderAttributes(request, result);
+        String cityFrom = request.getParameter(Parameters.CITY_FROM_ID);
+        request.setAttribute(Parameters.CITY_FROM, isNotEmpty(cityFrom) ? cityService.getById(Long.parseLong(cityFrom)) : null);
+        String cityTo = request.getParameter(Parameters.CITY_TO_ID);
+        request.setAttribute(Parameters.CITY_TO, isNotEmpty(cityTo) ? cityService.getById(Long.parseLong(cityTo)) : null);
     }
 
     private static boolean isNotEmpty(String str) {
         return str != null && !str.isEmpty();
+    }
+
+    private static boolean isNotNull(Object obj) {
+        return obj != null && ((String) obj).length()>0 && !obj.equals("0");
     }
 
     private ActionUtil() {

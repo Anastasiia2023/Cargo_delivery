@@ -11,6 +11,8 @@ import ua.cargo.entities.User;
 import ua.cargo.entities.enums.OrderStatus;
 import ua.cargo.exceptions.DAOException;
 
+import java.io.CharArrayReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.mysql.cj.MysqlType.VARCHAR;
 import static ua.cargo.dao.constants.OrderSQLQueries.*;
 import static ua.cargo.dao.constants.OrderSQLQueries.GET_NUMBER_OF_RECORDS;
 
@@ -110,12 +113,10 @@ public class OrderDAOImpl implements OrderDAO {
     public List<Order> getAllByUser(long userId, int offset, int records, String sortedValue, String order, String filterQuery) throws DAOException {
         List<Order> orders = new ArrayList<>();
         try (Connection connection = DataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(String.format(GET_ORDERS_BY_USER_PAGINATED_ORDERED, filterQuery))) {
+             PreparedStatement preparedStatement = connection.prepareStatement(String.format(GET_ORDERS_BY_USER_PAGINATED_ORDERED, filterQuery, sortedValue, order))) {
             preparedStatement.setLong(1, userId);
-            preparedStatement.setString(2, sortedValue);
-            preparedStatement.setString(3, order);
-            preparedStatement.setInt(4, records);
-            preparedStatement.setInt(5, offset);
+            preparedStatement.setInt(2, records);
+            preparedStatement.setInt(3, offset);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 orders.add(createOrder(resultSet));
@@ -179,18 +180,18 @@ public class OrderDAOImpl implements OrderDAO {
     public List<Order> getAll(int offset, int records, String sortedValue, String order, String filterQuery) throws DAOException {
         List<Order> orders = new ArrayList<>();
         String query = "";
+        Boolean isJoined = false;
         if (filterQuery.length() > 0) {
             query += "WHERE " + filterQuery;
             if (filterQuery.contains("city")) {
                 query = JOIN_ROUTE + query;
+                isJoined = true;
             }
         }
         try (Connection connection = DataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(String.format(GET_ORDERS_PAGINATED_ORDERED, query))) {
-            preparedStatement.setString(1, sortedValue);
-            preparedStatement.setString(2, order);
-            preparedStatement.setInt(3, records);
-            preparedStatement.setInt(4, offset);
+             PreparedStatement preparedStatement = connection.prepareStatement(String.format(GET_ORDERS_PAGINATED_ORDERED, query, isJoined ? "o." + sortedValue : sortedValue, order))) {
+            preparedStatement.setInt(1, records);
+            preparedStatement.setInt(2, offset);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 orders.add(createOrder(resultSet));

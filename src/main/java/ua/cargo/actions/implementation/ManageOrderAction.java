@@ -44,18 +44,16 @@ public class ManageOrderAction implements Action {
         try {
             result.addAll(orderService.getAll(pagination, filterQuery));
             request.setAttribute(Parameters.TOTAL_RECORDS, orderService.getNumberOfRecords(filterQuery));
-            String cityFrom = request.getParameter(Parameters.CITY_FROM_ID);
-            request.setAttribute(Parameters.CITY_FROM, cityFrom == null ? null : cityService.getById(Long.parseLong(cityFrom)));
-            String cityTo = request.getParameter(Parameters.CITY_TO_ID);
-            request.setAttribute(Parameters.CITY_TO, cityTo == null ? null : cityService.getById(Long.parseLong(cityTo)));
             List<CityDTO> listCity = cityService.getAll();
             request.setAttribute(Parameters.LIST_CITY, listCity);
+            setManagerOrderAttributes(request, cityService, result);
         } catch (ServiceException e) {
             request.getSession().setAttribute(Parameters.ERROR, e.getMessage());
         }
-        setOrderAttributes(request, result);
         transferStringFromSessionToRequest(request, Parameters.OFFSET);
         transferStringFromSessionToRequest(request, Parameters.RECORDS);
+        transferStringFromSessionToRequest(request, Parameters.SORT);
+        transferStringFromSessionToRequest(request, Parameters.ORDER);
         paginate(request);
         return Pages.REPORTS_PAGE;
     }

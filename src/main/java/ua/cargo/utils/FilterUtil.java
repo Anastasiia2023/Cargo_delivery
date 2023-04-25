@@ -83,7 +83,7 @@ public final class FilterUtil {
     }
 
     private static boolean isNotNull(Object obj) {
-        return obj != null && ((String) obj).length()>0;
+        return obj != null && ((String) obj).length()>0 && !obj.equals("0");
     }
 
     private FilterUtil() {

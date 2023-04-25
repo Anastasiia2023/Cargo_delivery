@@ -7,8 +7,16 @@ import java.util.Map;
 
 import static ua.cargo.actions.constants.ActionNames.*;
 
+/**
+ * ActionFactory class. Contains all available actions and method to get any of them.
+ *
+ * @author Anastasiia Shevchuk
+ * @version 1.0
+ */
 
 public final class ActionFactory {
+
+    /** Action factory instance. Singleton */
     private static final ActionFactory ACTION_FACTORY = new ActionFactory();
     private static final Map<String, Action> ACTION_MAP = new HashMap<>();
 
@@ -40,6 +48,13 @@ public final class ActionFactory {
     public static ActionFactory getActionFactory() {
         return ACTION_FACTORY;
     }
+
+    /**
+     * Obtains action by its name
+     *
+     * @param actionName - to search in map
+     * @return required action implementation or DefaultAction if there is no such action
+     */
 
     public Action createAction(String actionName) {
         return ACTION_MAP.getOrDefault(actionName, new DefaultAction());

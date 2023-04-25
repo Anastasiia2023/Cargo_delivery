@@ -12,6 +12,7 @@
 <script src="../js/jquery-3.6.3.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/bootstrap-icons.css">
 </head>
 
 
@@ -83,14 +84,94 @@
 </form>
 
         <div class="row g-3">
-          <table  class="table table-bordered" style="background-color: #e3f2fd;">
+          <table id="myOrderTable" class="table table-bordered" style="background-color: #e3f2fd;">
             <thead>
               <tr>
-                 <th scope="col"><fmt:message key="id"/></th>
-                 <th scope="col" ><fmt:message key="route"/></th>
-                 <th scope="col" ><fmt:message key="creation.date"/></th>
-                 <th scope="col"><fmt:message key="estimate.delivery.terms"/></th>
-                 <th scope="col"><fmt:message key="status"/></th>
+                 <th scope="col"><fmt:message key="id"/>
+                     <c:if test="${requestScope.sort ne 'id'}">
+                         <a href="controller?action=my-order&sort=id&order=ASC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                            <i class="bi bi-arrow-down-up"></i>
+                         </a>
+                     </c:if>
+                     <c:if test="${requestScope.sort eq 'id' && requestScope.order eq 'ASC'}">
+                        <a href="controller?action=my-order&sort=id&order=DESC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                           <i class="bi bi-arrow-up"></i>
+                        </a>
+                     </c:if>
+                     <c:if test="${requestScope.sort eq 'id' && requestScope.order eq 'DESC'}">
+                        <a href="controller?action=my-order&sort=id&order=ASC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                            <i class="bi bi-arrow-down"></i>
+                        </a>
+                     </c:if>
+                 </th>
+                 <th scope="col"><fmt:message key="route"/>
+                 <c:if test="${requestScope.sort ne 'route_id'}">
+                                          <a href="controller?action=my-order&sort=route_id&order=ASC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                             <i class="bi bi-arrow-down-up"></i>
+                                          </a>
+                                      </c:if>
+                                      <c:if test="${requestScope.sort eq 'route_id' && requestScope.order eq 'ASC'}">
+                                         <a href="controller?action=my-order&sort=route_id&order=DESC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                            <i class="bi bi-arrow-up"></i>
+                                         </a>
+                                      </c:if>
+                                      <c:if test="${requestScope.sort eq 'route_id' && requestScope.order eq 'DESC'}">
+                                         <a href="controller?action=my-order&sort=route_id&order=ASC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                             <i class="bi bi-arrow-down"></i>
+                                         </a>
+                                      </c:if>
+                 </th>
+                 <th scope="col"><fmt:message key="creation.date"/>
+                 <c:if test="${requestScope.sort ne 'creation_date'}">
+                                          <a href="controller?action=my-order&sort=creation_date&order=ASC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                             <i class="bi bi-arrow-down-up"></i>
+                                          </a>
+                                      </c:if>
+                                      <c:if test="${requestScope.sort eq 'creation_date' && requestScope.order eq 'ASC'}">
+                                         <a href="controller?action=my-order&sort=creation_date&order=DESC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                            <i class="bi bi-arrow-up"></i>
+                                         </a>
+                                      </c:if>
+                                      <c:if test="${requestScope.sort eq 'creation_date' && requestScope.order eq 'DESC'}">
+                                         <a href="controller?action=my-order&sort=creation_date&order=ASC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                             <i class="bi bi-arrow-down"></i>
+                                         </a>
+                                      </c:if>
+                 </th>
+                 <th scope="col"><fmt:message key="estimate.delivery.terms"/>
+                 <c:if test="${requestScope.sort ne 'delivery_date'}">
+                                          <a href="controller?action=my-order&sort=delivery_date&order=ASC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                             <i class="bi bi-arrow-down-up"></i>
+                                          </a>
+                                      </c:if>
+                                      <c:if test="${requestScope.sort eq 'delivery_date' && requestScope.order eq 'ASC'}">
+                                         <a href="controller?action=my-order&sort=delivery_date&order=DESC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                            <i class="bi bi-arrow-up"></i>
+                                         </a>
+                                      </c:if>
+                                      <c:if test="${requestScope.sort eq 'delivery_date' && requestScope.order eq 'DESC'}">
+                                         <a href="controller?action=my-order&sort=delivery_date&order=ASC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                             <i class="bi bi-arrow-down"></i>
+                                         </a>
+                                      </c:if>
+                 </th>
+                 <th scope="col"><fmt:message key="status"/>
+                 <c:if test="${requestScope.sort ne 'statuses'}">
+                                          <a href="controller?action=my-order&sort=statuses&order=ASC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                             <i class="bi bi-arrow-down-up"></i>
+                                          </a>
+                                      </c:if>
+                                      <c:if test="${requestScope.sort eq 'statuses' && requestScope.order eq 'ASC'}">
+                                         <a href="controller?action=my-order&sort=statuses&order=DESC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                            <i class="bi bi-arrow-up"></i>
+                                         </a>
+                                      </c:if>
+                                      <c:if test="${requestScope.sort eq 'statuses' && requestScope.order eq 'DESC'}">
+                                         <a href="controller?action=my-order&sort=statuses&order=ASC&offset=${offset}&records=${records}&order-status=${orderStatus.value}&date-from=${dateFrom}&date-to=${dateTo}">
+                                             <i class="bi bi-arrow-down"></i>
+                                         </a>
+                                      </c:if>
+                 </th>
                  <th scope="col"><fmt:message key="delivery.cost"/></th>
                  <th scope="col"><fmt:message key="invoice"/></th>
               </tr>
@@ -124,7 +205,31 @@
               </c:forEach>
             </tbody>
           </table>
+          <script>
+            (function(fn) {
+            	'use strict';
+            	fn(window.jQuery, window, document);
+            }(function($, window, document) {
+            	'use strict';
 
+            	$(function() {
+            		$('.sort-btn').on('click', '[data-sort]', function(event) {
+            			event.preventDefault();
+
+            			var $this = $(this),
+            				sortDir = 'desc';
+
+            			if ($this.data('sort') !== 'asc') {
+            				sortDir = 'asc';
+            			}
+
+            			$this.data('sort', sortDir).find('.fa').attr('class', 'fa fa-sort-' + sortDir);
+
+            			// call sortDesc() or sortAsc() or whathaveyou...
+            		});
+            	});
+            }));
+          </script>
         </div>
         <form method="POST" action="controller">
         	  <input type="hidden" name="action" value="my-order">

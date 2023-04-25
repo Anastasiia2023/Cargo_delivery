@@ -13,10 +13,12 @@ public final class PaginationUtil {
         int offset = getInt((String) request.getAttribute(OFFSET), 0, 0);
         int records = getInt((String) request.getAttribute(RECORDS), 1, 5);
         int totalRecords = getInt(request.getAttribute(TOTAL_RECORDS)+"", 0, 0);
-        setAttributes(request, totalRecords, records, offset);
+        String sortField = (String) request.getAttribute(SORT);
+        String order = (String) request.getAttribute(ORDER);
+        setAttributes(request, totalRecords, records, offset, sortField, order);
     }
 
-    private static void setAttributes(HttpServletRequest request, int totalRecords, int records, int offset) {
+    private static void setAttributes(HttpServletRequest request, int totalRecords, int records, int offset, String sortField, String order) {
         int pages = totalRecords / records + (totalRecords % records != 0 ? 1 : 0);
         int currentPage = offset / records + 1;
         int startPage = currentPage == pages ? Math.max(currentPage - 2, 1)
@@ -28,6 +30,8 @@ public final class PaginationUtil {
         request.setAttribute(CURRENT_PAGE, currentPage);
         request.setAttribute(START, startPage);
         request.setAttribute(END, endPage);
+        request.setAttribute(SORT, sortField);
+        request.setAttribute(ORDER, order);
     }
 
     private static int getInt(String value, int min, int defaultValue) {
@@ -47,8 +51,11 @@ public final class PaginationUtil {
         paginationData.setOffset(getInt(request.getParameter(OFFSET),0, 0));
         paginationData.setRecords(getInt(request.getParameter(RECORDS), 1, 5));
         paginationData.setOrder(request.getParameter(ORDER));
+        paginationData.setSortField(request.getParameter(SORT));
         request.getSession().setAttribute(OFFSET, paginationData.getOffset());
         request.getSession().setAttribute(RECORDS, paginationData.getRecords());
+        request.getSession().setAttribute(ORDER, paginationData.getOrder());
+        request.getSession().setAttribute(SORT, paginationData.getSortField());
         return paginationData;
     }
 

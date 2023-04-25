@@ -1,5 +1,12 @@
 package ua.cargo.actions.constants;
 
+/**
+ * This is ParameterValues class. It contains all constant parameters and attributes values
+ *
+ * @author Anastasiia Shevchuk
+ * @version 1.0
+ */
+
 public final class ParameterValues {
     public static final String CHECK_EMAIL = "check.email";
     public static final String SUCCEED_REGISTER = "succeed.registered";

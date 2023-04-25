@@ -20,6 +20,13 @@ import java.util.stream.Collectors;
 
 import static ua.cargo.utils.ActionUtil.*;
 
+/**
+ * This is CalculateAction class. Accessible by any user. Allows to calculate cost of delivery.
+ *
+ * @author Anastasiia Shevchuk
+ * @version 1.0
+ */
+
 public class CalculateAction implements Action {
 
     private final CityService cityService;
@@ -37,6 +44,14 @@ public class CalculateAction implements Action {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         return isPostMethod(request) ? executePost(request) : executeGet(request, response);
     }
+
+    /**
+     * Called from doGet method in front-controller. Obtains required path and transfer attributes from session
+     * to request
+     *
+     * @param request to get message or error attribute from session and put it in request
+     * @return calculate page
+     */
 
     private String executeGet(HttpServletRequest request, HttpServletResponse response) {
         try {

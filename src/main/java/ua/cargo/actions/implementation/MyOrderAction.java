@@ -48,6 +48,8 @@ public class MyOrderAction implements Action {
         setOrderAttributes(request, result);
         transferStringFromSessionToRequest(request, Parameters.OFFSET);
         transferStringFromSessionToRequest(request, Parameters.RECORDS);
+        transferStringFromSessionToRequest(request, Parameters.SORT);
+        transferStringFromSessionToRequest(request, Parameters.ORDER);
         paginate(request);
         return MY_ORDER_PAGE;
     }
